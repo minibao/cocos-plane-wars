@@ -208,9 +208,9 @@
     "enabledContactListener": false,
     "bullet": false,
     "awakeOnLoad": true,
-    "_group": 1,
+    "_group": 4,
     "_type": 1,
-    "_allowSleep": true,
+    "_allowSleep": false,
     "_gravityScale": 1,
     "_linearDamping": 0,
     "_angularDamping": 0,
@@ -235,6 +235,8 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "b3mlnIcBZI4aUZtkVTtnrZ"
+    "fileId": "b3mlnIcBZI4aUZtkVTtnrZ",
+    "instance": null,
+    "targetOverrides": null
   }
 ]

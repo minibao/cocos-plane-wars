@@ -42,8 +42,8 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 1.2800000000000011,
-      "y": 648.358,
+      "x": 107.721,
+      "y": 559.8779999999999,
       "z": 0
     },
     "_lrot": {
@@ -281,10 +281,13 @@
     "__prefab": {
       "__id__": 13
     },
-    "animDown": {
+    "anim": {
       "__id__": 7
     },
+    "animHit": "enemy2-hit",
+    "animDown": "enemy2-down",
     "speed": 100,
+    "hp": 10,
     "_id": ""
   },
   {
@@ -369,12 +372,12 @@
     "__prefab": {
       "__id__": 17
     },
-    "enabledContactListener": false,
+    "enabledContactListener": true,
     "bullet": false,
     "awakeOnLoad": true,
-    "_group": 1,
+    "_group": 2,
     "_type": 1,
-    "_allowSleep": true,
+    "_allowSleep": false,
     "_gravityScale": 1,
     "_linearDamping": 0,
     "_angularDamping": 0,
@@ -400,6 +403,6 @@
       "__id__": 0
     },
     "fileId": "d6l/JBesVGX5WRlfSWS4kX",
-    "targetOverrides": null
+    "targetOverrides": []
   }
 ]

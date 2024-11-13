@@ -277,10 +277,13 @@
     "__prefab": {
       "__id__": 13
     },
-    "animDown": {
+    "anim": {
       "__id__": 7
     },
+    "animHit": "",
+    "animDown": "enemy0-down",
     "speed": 300,
+    "hp": 1,
     "_id": ""
   },
   {
@@ -345,12 +348,12 @@
     "__prefab": {
       "__id__": 17
     },
-    "enabledContactListener": false,
+    "enabledContactListener": true,
     "bullet": false,
     "awakeOnLoad": true,
-    "_group": 1,
+    "_group": 2,
     "_type": 1,
-    "_allowSleep": true,
+    "_allowSleep": false,
     "_gravityScale": 1,
     "_linearDamping": 0,
     "_angularDamping": 0,
@@ -376,6 +379,6 @@
       "__id__": 0
     },
     "fileId": "d6l/JBesVGX5WRlfSWS4kX",
-    "targetOverrides": null
+    "targetOverrides": []
   }
 ]

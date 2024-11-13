@@ -1,4 +1,4 @@
-import { _decorator, Component, EventTouch, input, Input, instantiate, Node, Prefab, v3, view } from 'cc';
+import { _decorator, Animation, Collider2D, Component, Contact2DType, EventTouch, input, Input, instantiate, Node, Prefab, v2, v3, Vec2, view } from 'cc';
 const { ccclass, property } = _decorator;
 
 enum ShootType {
@@ -25,28 +25,51 @@ export class Player extends Component {
     @property(Node)
     private bullet2RightPos: Node = null
 
-    private boundary: number = 0
+    @property(Animation)
+    private anim: Animation = null
+
+    @property
     private shootRate: number = 0.3
+
+    private boundary: Vec2 = v2(230, 380)
+    private animHit: string = 'player-hit'
+    
     private shootTime: number = 0
     private shootType: ShootType = ShootType.SINGLE
+    private collider: Collider2D = null
+    private isDown: boolean = false
 
     onLoad() {
         input.on(Input.EventType.TOUCH_MOVE, this.onTouchMove, this)
 
-        // this.boundary = view.getVisibleSize()
-        console.log(view.getViewportRect(), view.getVisibleSize(), view.getVisibleSizeInPixel())
+        this.collider = this.getComponent(Collider2D)
+
+        if (this.collider) {
+            this.collider.on(Contact2DType.BEGIN_CONTACT, this.onBeginContact, this)
+        }
     }
 
     update(dt: number) {
-        switch (this.shootType) {
-            case ShootType.SINGLE:
-                this.shootSingle(dt)
-                break
-        
-            case ShootType.DOUBLE:
-                this.shootDouble(dt)
-                break
+        if (!this.isDown) {
+            switch (this.shootType) {
+                case ShootType.SINGLE:
+                    this.shootSingle(dt)
+                    break
+            
+                case ShootType.DOUBLE:
+                    this.shootDouble(dt)
+                    break
+            }
         }
+    }
+
+    private onBeginContact(selfCollider: Collider2D, otherCollider: Collider2D): void {
+        this.isDown = true
+        this.anim.play(this.animHit)
+        this.collider.enabled = false
+        this.scheduleOnce(() => {
+            this.node.destroy()
+        }, 1)
     }
 
     private shootSingle(dt: number): void {
@@ -74,9 +97,10 @@ export class Player extends Component {
     }
 
     private onTouchMove(event: EventTouch): void {
+        if (this.isDown) return
         const { x, y, z } = this.node.position
-        const boundaryX = 230
-        const boundaryY = 380
+        const boundaryX = this.boundary.x
+        const boundaryY = this.boundary.y
         const targetPos = v3(x + event.getDeltaX(), y + event.getDeltaY(), z)
 
         if (targetPos.x < -boundaryX) {
@@ -93,11 +117,13 @@ export class Player extends Component {
         }
 
         this.node.setPosition(targetPos)
-
     }
 
     onDestroy() {
         input.off(Input.EventType.TOUCH_MOVE, this.onTouchMove, this)
+        if (this.collider) {
+            this.collider.off(Contact2DType.BEGIN_CONTACT, this.onBeginContact, this)
+        }
     }
 }
 
